@@ -1,5 +1,5 @@
 # Please insure that your custom_dataset are put in same parent dir with YOLOv6_DIR
-train: "C:/Coding projects/yolo/data/ready_to_go_data/train_test_split/train" # train images
+train: "C:/Coding projects/yolo/data/ready_to_go_data/train_test_split/train_with_augmentations" # train images
 val: "C:/Coding projects/yolo/data/ready_to_go_data/train_test_split/val" # val images
 
 # whether it is coco dataset, only coco dataset should be set to True.

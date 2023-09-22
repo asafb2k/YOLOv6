@@ -9,7 +9,7 @@ from PIL import Image
 import numpy as np
 
 
-def add_augmentations(Path_input_train_only_images:Path=Path(r"/media/access/New Volume/tmp_output/data_in_yolov6_format_640x640_no_augmentations_inc_tabletennis_first_2_leagues/images/train"),Path_input_train_only_labels:Path=Path(r"/media/access/New Volume/tmp_output/data_in_yolov6_format_640x640_no_augmentations_inc_tabletennis_first_2_leagues/labels/train"),path_output_images:Path=Path(r'/media/access/New Volume/tmp_output/data_in_yolov6_format_640x640_heavy_augmentations_inc_tabletennis_first_2_leagues/images/train'),path_output_labels:Path=Path(r'/media/access/New Volume/tmp_output/data_in_yolov6_format_640x640_heavy_augmentations_inc_tabletennis_first_2_leagues/labels/train')):
+def add_augmentations(Path_input_train_only_images:Path=Path(r"C:\Coding projects\yolo\data\ready_to_go_data\train_test_split\train"),Path_input_train_only_labels:Path=Path(r"C:\Coding projects\yolo\data\ready_to_go_data\train_test_split\train"),path_output_images:Path=Path(r"C:\Coding projects\yolo\data\ready_to_go_data\train_test_split\train_with_augmentations"),path_output_labels:Path=Path(r"C:\Coding projects\yolo\data\ready_to_go_data\train_test_split\train_with_augmentations")):
     list_of_all_images = list(Path_input_train_only_images.glob('*.png'))
     list_of_all_images = sorted(list_of_all_images, key=lambda x: x.name.split('.')[0])
     list_of_all_text_files = sorted(list(Path_input_train_only_labels.glob('*.txt')), key=lambda x: x.name.split('.')[0])
@@ -23,10 +23,10 @@ def add_augmentations(Path_input_train_only_images:Path=Path(r"/media/access/New
     transforms_GaussianBlur  = A.Compose([A.GaussianBlur (blur_limit=(3, 7), sigma_limit=0, always_apply=False, p=1)])
     transform_JpegCompression = A.Compose([A.JpegCompression(quality_lower=99, quality_upper=100, always_apply=False, p=1)])
     transform_Sharpen = A.Compose([A.Sharpen(alpha=(0.2, 0.5), lightness=(0.5, 1.0), always_apply=False, p=1)])
-    transform_RandomShadow = A.Compose([A.RandomShadow(shadow_roi=(0, 0.5, 1, 1), num_shadows_lower=1, num_shadows_upper=2, shadow_dimension=5, always_apply=False, p=1)])
+    # transform_RandomShadow = A.Compose([A.RandomShadow(shadow_roi=(0, 0.5, 1, 1), num_shadows_lower=1, num_shadows_upper=2, shadow_dimension=5, always_apply=False, p=1)])
     transform_ISOnoise = A.Compose([A.ISONoise (color_shift=(0.01, 0.05), intensity=(0.1, 0.5), always_apply=False, p=1)])
 
-    list_all_transforms = [transform_RGBShift,transform_CLAHE,transform_RandomBrightness,transform_RandomGamma,transforms_GaussianBlur,transform_JpegCompression,transform_Sharpen,transform_RandomShadow,transform_ISOnoise]
+    list_all_transforms = [transform_RGBShift,transform_CLAHE,transform_RandomBrightness,transform_RandomGamma,transforms_GaussianBlur,transform_JpegCompression,transform_Sharpen,transform_ISOnoise]
     
     for image_and_text in tqdm(zipped_image_and_txt, total=len(zipped_image_and_txt)):
         image = cv2.imread(image_and_text[0].as_posix())
@@ -51,8 +51,8 @@ def add_augmentations(Path_input_train_only_images:Path=Path(r"/media/access/New
             txt_file_name = Path(path_output_labels.as_posix() + '/' + image_and_text[1].name.split('.')[0]+f'_AUGMENTATION_{index+1}.txt')
             cv2.imwrite(image_name.as_posix(),image)
             shutil.copyfile(image_and_text[1], txt_file_name)
-            cv2.imshow('test', image)
-            cv2.waitKey(1)
+            # cv2.imshow('test', image)
+            # cv2.waitKey(1)
 
 
 
@@ -367,8 +367,8 @@ def train_and_test_txt_file_organizer(train_file_path:Path, test_file_path:Path,
 
 
 if __name__ == '__main__':
-    # add_augmentations()
-    train_test_split_mine()
+    add_augmentations()
+    # train_test_split_mine()
     # data_organizer((640,640),Path(r"/run/user/1000/gvfs/smb-share:server=qnap.lsports.eu,share=data-new/Asaf/scoreboard_detection_data/Tennis/Scoreboards/Annotation"),Path(r"/run/user/1000/gvfs/smb-share:server=qnap.lsports.eu,share=data-new/Asaf/scoreboard_detection_data/Tennis/Scoreboards/Images"),Path(r"/run/user/1000/gvfs/smb-share:server=qnap.lsports.eu,share=data-new/Asaf/scoreboard_detection_data/ready_to_go_data_17_11_2022"), Path(r"/run/user/1000/gvfs/smb-share:server=qnap.lsports.eu,share=data-new/Asaf/scoreboard_detection_data/ready_to_go_data_17_11_2022"))
     # data_organizer_supervisely_peter_script_output((640,640),Path(r"/media/access/New Volume/tmp_output/tmp_table_tennis_addition/labels"),Path(r"/media/access/New Volume/tmp_output/tmp_table_tennis_addition/images"),Path(r"/media/access/New Volume/tmp_output/tmp_table_tennis_addition_after_peter_script"))
     # train_and_test_txt_file_organizer(Path(r"/media/access/New Volume/cv-asaf-research/asaf scoreboard detector/darknet/ready_to_go_scoreboard_data_including_tabletennis_11_08_2022_YOLOv4_TINY/train.txt"), Path(r"/media/access/New Volume/cv-asaf-research/asaf scoreboard detector/darknet/ready_to_go_scoreboard_data_including_tabletennis_11_08_2022_YOLOv4_TINY/val.txt"),Path(r"/media/access/New Volume/cv-asaf-research/asaf scoreboard detector/darknet/ready_to_go_scoreboard_data_including_tabletennis_11_08_2022_YOLOv4_TINY/train"), Path(r"/media/access/New Volume/cv-asaf-research/asaf scoreboard detector/darknet/ready_to_go_scoreboard_data_including_tabletennis_11_08_2022_YOLOv4_TINY/val"))
