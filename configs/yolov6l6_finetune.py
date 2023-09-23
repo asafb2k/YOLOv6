@@ -1,7 +1,7 @@
 # YOLOv6l6 model
 model = dict(
     type='YOLOv6l6',
-    pretrained="C:/Coding projects/yolo/data/models/yolov66.pt",
+    pretrained="C:/Coding projects/yolo/data/models/yolov6l6.pt",
     depth_multiple=1.0,
     width_multiple=1.0,
     backbone=dict(
