@@ -206,6 +206,7 @@ class TrainValDataset(Dataset):
         """
         path = self.img_paths[index]
         try:
+            path = Path(path).as_posix()
             im = cv2.imread(path)
             assert im is not None, f"opencv cannot read image correctly or {path} not exists"
         except:
