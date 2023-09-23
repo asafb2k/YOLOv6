@@ -1,7 +1,7 @@
 # YOLOv6l6 model
 model = dict(
     type='YOLOv6l6',
-    pretrained='weights/yolov6l6.pt',
+    pretrained="C:/Coding projects/yolo/data/models/yolov66.pt",
     depth_multiple=1.0,
     width_multiple=1.0,
     backbone=dict(
@@ -50,13 +50,14 @@ data_aug = dict(
     hsv_h=0.0138,
     hsv_s=0.664,
     hsv_v=0.464,
-    degrees=0.373,
-    translate=0.245,
-    scale=0.898,
-    shear=0.602,
-    flipud=0.00856,
-    fliplr=0.5,
-    mosaic=1.0,
+    degrees=0.0,
+    translate=0.15,
+    scale=0.05,
+    shear=0.05,
+    flipud=0.0,
+    fliplr=0.0,
+    mosaic=0.75,
     mixup=0.243,
 )
+
 training_mode = "conv_silu"
